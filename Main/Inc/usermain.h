@@ -10,7 +10,7 @@ extern "C" {
 #include "../Inc/led.h"
 #include "../Inc/uart.h"
 
-u8 mode; /* 0 = MASTER, 1 = SLAVE */
+
 enum {
     MASTER = 0,
     SLAVE,
@@ -29,6 +29,9 @@ typedef enum
     COMMAND_MAX,
 } USRM_Mode_TypeDef;
 
+typedef struct {
+    u8 mode; /* 0 = MASTER, 1 = SLAVE */
+} GLOBAL_REG_STRUCT;
 
 void user_init(void);
 void user_main(void);

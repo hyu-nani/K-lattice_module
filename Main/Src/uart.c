@@ -71,3 +71,7 @@ void Q_Check() {
     UART2_Recv_Q_Check();
     UART2_Send_Q_Check();
 }
+
+void Interrupt_Uart() {
+    
+}

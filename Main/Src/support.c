@@ -11,9 +11,19 @@ CSTATUS Check_ExternPin() {
     return ret;
 }
 
-CSTATUS Change_Port() {
+CSTATUS Change_ExtendPort(u8 output) {
     CSTATUS ret = OK;
-
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    HAL_GPIO_DeInit(EXTEND_GPIO_Port, &GPIO_InitStruct);
+    GPIO_InitStruct.Pin = EXTEND_Pin;
+    if (output == 1U) {
+        GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+        GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    } else {
+        GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+    }
+    HAL_GPIO_Init(EXTEND_GPIO_Port, &GPIO_InitStruct);
 
     return ret;
 }
