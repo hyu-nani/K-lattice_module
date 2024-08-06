@@ -50,3 +50,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+EWARM/settings/
+EWARM/K_clock/
+EWARM/K_clock.dep
+EWARM/K_clock.ewt
