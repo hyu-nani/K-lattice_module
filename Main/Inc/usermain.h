@@ -6,21 +6,15 @@ extern "C" {
 #endif
 
 #include "main.h"
-#include "../Inc/support.h"
 
 #include "../Inc/led.h"
+#include "../Inc/uart.h"
 
-
-
-#define MAXQ 50
-#define MAXD 10
-
-typedef enum uartdir{       /* UART1 : USB or Front device / UART2 : Back device */
-    UART1_SEND = 0U,
-    UART1_RECV,
-    UART2_SEND,
-    UART2_RECV,
-} UART_DIR;
+u8 mode; /* 0 = MASTER, 1 = SLAVE */
+enum {
+    MASTER = 0,
+    SLAVE,
+};
 
 typedef enum
 {
@@ -34,15 +28,6 @@ typedef enum
     SET_BG_COLOR,
     COMMAND_MAX,
 } USRM_Mode_TypeDef;
-
-typedef struct
-{
-    int IDX;
-    int HEAD;
-    int TAIL;
-	int CNT;
-    unsigned char BUF[MAXQ][MAXD];
-} UART_QUEUE;
 
 
 void user_init(void);

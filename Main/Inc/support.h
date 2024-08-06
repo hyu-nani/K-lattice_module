@@ -19,6 +19,13 @@ typedef enum {
     CTRUE,
 } CBOOL;
 
+typedef enum {
+    FAIL = 0,
+    OK,
+    BUSY,
+    ERR,
+} CSTATUS;
+
 /*
  * support
  */

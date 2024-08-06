@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-#include "support.h"
-
 #define NUM_PIXELS_PER_UNIT     41      /* number of LED per unit */
 #define NUM_UNIT                5       
 #define MAX_BRIGHT              180.0f  
