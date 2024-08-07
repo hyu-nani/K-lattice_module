@@ -47,7 +47,7 @@ I2C_HandleTypeDef hi2c2;
 
 RTC_HandleTypeDef hrtc;
 
-TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim3;
 DMA_HandleTypeDef hdma_tim3_ch1;
 
 extern UART_HandleTypeDef huart1;
