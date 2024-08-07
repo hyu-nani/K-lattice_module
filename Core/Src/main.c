@@ -50,8 +50,8 @@ RTC_HandleTypeDef hrtc;
 TIM_HandleTypeDef htim3;
 DMA_HandleTypeDef hdma_tim3_ch1;
 
-UART_HandleTypeDef huart1;
-UART_HandleTypeDef huart2;
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
@@ -119,8 +119,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
     user_main();
+    /* USER CODE END WHILE */
+    
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

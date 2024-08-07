@@ -13,15 +13,24 @@
 
 USRM_HANDLE_Typedef Uhandle;
 
+#define MAINLOOP_TIME  10   /*ms*/
+
 void user_init() {
     Uhandle.mode = (Check_ExternPin() == OK ) ? MASTER : SLAVE; 
+    Uhandle.tick_main = HAL_GetTick();
 }
 
 void user_main() {
-    Q_Check();
+    /* per main time */
+    
+    /* end */
+    while((HAL_GetTick() - Uhandle.tick_main) < MAINLOOP_TIME) {
+        Q_Check();
+    }
+    Uhandle.tick_main = HAL_GetTick();
 }
 
-HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     if      (huart->Instance == USART1) {UART1_RxCpltCallback();}
     else if (huart->Instance == USART2) {UART2_RxCpltCallback();}

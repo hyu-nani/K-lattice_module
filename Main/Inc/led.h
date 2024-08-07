@@ -5,6 +5,9 @@
 extern "C" {
 #endif
 
+#define WS2812
+//#define SK6812
+
 #define NUM_PIXELS_PER_UNIT     41      /* number of LED per unit */
 #define NUM_UNIT                5       
 #define MAX_BRIGHT              180.0f  
@@ -12,11 +15,16 @@ extern "C" {
 #define MAX_IDX                 50
 #define ALL_LED                 NUM_PIXELS_PER_UNIT*NUM_UNIT
   
-#define ARR 10
+
+#define PRESCALER               8
+#define CLOCK                   64000000f
+#define PWM                     0.0000012f
+
+#define ARR                     (CLOCK*PWM)-1
 
 #ifdef WS2812
-#define NEOPIXEL_ZERO           26      /* (ARR+1)*0.32 */
-#define NEOPIXEL_ONE            51      /* (ARR+1)*0.64 */
+#define NEOPIXEL_ZERO           (ARR+1)*0.32f
+#define NEOPIXEL_ONE            (ARR+1)*0.64f
 #define DMA_BUFF_SIZE           24 + 1
 #endif
 
@@ -29,6 +37,7 @@ extern "C" {
 #define RING_BUF_SIZE           ALL_LED * 3
 
 #define MUL_VAL                 100
+
 /* private define ------------------------------------ */
 typedef struct 
 {
@@ -66,6 +75,7 @@ typedef struct
     u32     bg_bright;
 
 } COLOR_TYPEDEF_STRUCT;
+
 
 /* data */
 static u8       ascii_table_idx[MAX_IDX];

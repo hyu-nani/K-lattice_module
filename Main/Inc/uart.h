@@ -22,17 +22,27 @@ typedef enum cmdlist{
     CMD_GET_NUM_DEVICE,
 } CMD_LIST;
 
-
 typedef struct
 {
     int IDX;
     int HEAD;
     int TAIL;
 	int CNT;
-    int LEN;
     unsigned char BUF[MAXQ][MAXD];
 } UART_QUEUE;
 
+typedef struct uart
+{
+    u8  rxd[MAXD];   /* buffer for receive data */
+    u8  cmp[MAXD];   /* buffer for compare */
+    u8  len;
+    u32 delayTx1;
+    u32 delayTx2;
+    u8  cmd;
+    u8  cnt;
+} UART_HANDLE_Typedef;
+
+void UART_Init(void);
 void Q_Check(void);
 void UART1_RxCpltCallback(void);
 void UART2_RxCpltCallback(void);

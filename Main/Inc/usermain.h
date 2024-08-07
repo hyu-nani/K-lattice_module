@@ -31,7 +31,8 @@ typedef enum
 
 typedef struct {
     u8 mode; /* 0 = MASTER, 1 = SLAVE */
-} GLOBAL_REG_STRUCT;
+    u32 tick_main;
+} USRM_HANDLE_Typedef;
 
 void user_init(void);
 void user_main(void);

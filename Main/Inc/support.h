@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-#define WS2812
-//#define SK6812
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -51,7 +49,8 @@ typedef enum {
 #define isNONU_FREE(x)                      if (x != NULL) { free(x); x = NULL; }
 #define SAVE_VAR(x, y, v)                   { x = CTRUE; y = v; }
 
-//void set_module(void);
+void combineBytes(u8 *byte, u32 *combined);
+void splitBytes(u32 combined, u8 *byte);
 
 #ifdef __cplusplus
 }
