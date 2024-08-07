@@ -35,7 +35,7 @@ extern "C" {
 
 #define RING_BUF_SIZE           ALL_LED * 3
 
-#define MUL_VAL                 100
+#define MUL_VAL                 100.0f
 
 /* private define ------------------------------------ */
 typedef struct 
@@ -47,6 +47,7 @@ typedef struct
 
     CBOOL   compare;           
     u8      DX;
+    u8      sendFlag;
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
 typedef struct 
@@ -79,6 +80,9 @@ typedef struct
 static float    led_segment_mask_r[NUM_PIXELS_PER_UNIT];
 static float    led_segment_mask_g[NUM_PIXELS_PER_UNIT];
 static float    led_segment_mask_b[NUM_PIXELS_PER_UNIT];
+
+void resetLedSendFlag(void);
+void LED_Init(void);
 
 #ifdef __cplusplus
 }

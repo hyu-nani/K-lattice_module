@@ -18,6 +18,7 @@ USRM_HANDLE_Typedef Uhandle;
 void user_init() {
     Uhandle.mode = (Check_ExternPin() == OK ) ? MASTER : SLAVE; 
     Uhandle.tick_main = HAL_GetTick();
+    LED_Init();
 }
 
 void user_main() {
@@ -47,4 +48,10 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
     if      (huart->Instance == USART1) {UART1_Callback_uartError();}
     else if (huart->Instance == USART2) {UART2_Callback_uartError();}
     else    {CNOP;}
+}
+
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
+{
+    HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+    resetLedSendFlag();
 }
