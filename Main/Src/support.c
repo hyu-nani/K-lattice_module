@@ -42,3 +42,12 @@ void splitBytes(u32 combined, u8 *byte) {
     byte[2] = (u8)((combined >> 8U) & 0xFFU);
     byte[3] = (u8)(combined & 0xFFU);
 }
+
+SWITCH checkSW(void) {
+    SWITCH ret = 0U;
+    ret |= (HAL_GPIO_ReadPin(SW1_GPIO_Port, SW1_Pin) == GPIO_PIN_SET) ? SW1 : 0U;
+    ret |= (HAL_GPIO_ReadPin(SW2_GPIO_Port, SW2_Pin) == GPIO_PIN_SET) ? SW2 : 0U;
+    ret |= (HAL_GPIO_ReadPin(SW3_GPIO_Port, SW3_Pin) == GPIO_PIN_SET) ? SW3 : 0U;
+    ret |= (HAL_GPIO_ReadPin(SW4_GPIO_Port, SW4_Pin) == GPIO_PIN_SET) ? SW4 : 0U;
+    return ret;
+}

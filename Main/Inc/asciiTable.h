@@ -1,8 +1,32 @@
 
+#ifndef __ASCIITABLE_H
+#define __ASCIITABLE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <main.h>
+
+/* dummy, size1, size2, size3, size4, size5, size6 */
+float mask_R[7] = { 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
+float mask_G[7] = { 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
+float mask_B[7] = { 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,};
+
+u8 mask_size[NUM_PIXELS_PER_UNIT] = {
+	2, 2, 2, 2,  
+	1, 1, 4, 1, 1, 
+	1, 3, 3, 1, 
+	2, 4, 4, 4, 2, 
+	1, 2, 2, 2, 1, 
+	2, 4, 4, 4, 2,  
+	1, 3, 3, 1, 
+	1, 1, 4, 1, 1,
+	2, 2, 2, 2,  
+};
+
 #define MAX_IDX 127 * 6
-static u8 ascii_segment[MAX_IDX] = {
+u8 ascii_segment[MAX_IDX] = {
     0x00,0x00,0x00,0x00,0x00,0x00,//00  NUL
     0x00,0x00,0x00,0x00,0x00,0x00,//01  SOH
     0x00,0x00,0x00,0x00,0x00,0x00,//02  STX
@@ -132,3 +156,10 @@ static u8 ascii_segment[MAX_IDX] = {
     0x00,0x00,0x00,0x00,0x00,0x00,//7E  ~
     0x00,0x00,0x00,0x00,0x00,0x00,//7F  DEL
 };
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

@@ -155,9 +155,9 @@ void LED_showSegment(u8* str, COLOR_TYPEDEF_STRUCT* color, CBOOL invert)
 			ledColor.R_NOW[i] += (s16)(((float)ledColor.R_DEST[i] - (float)ledColor.R_ORIG[i]) / (float)hled.DX);
 			ledColor.G_NOW[i] += (s16)(((float)ledColor.G_DEST[i] - (float)ledColor.G_ORIG[i]) / (float)hled.DX);
 			ledColor.B_NOW[i] += (s16)(((float)ledColor.B_DEST[i] - (float)ledColor.B_ORIG[i]) / (float)hled.DX);
-			LED_setColor(i, (u8)(((float)ledColor.R_NOW[i] * (float)led_segment_mask_r[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL), 
-							(u8)(((float)ledColor.G_NOW[i] * (float)led_segment_mask_g[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL), 
-							(u8)(((float)ledColor.B_NOW[i] * (float)led_segment_mask_b[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL));
+			LED_setColor(i, (u8)((float)ledColor.R_NOW[i] * mask_R[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL), 
+							(u8)((float)ledColor.G_NOW[i] * mask_G[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL), 
+							(u8)((float)ledColor.B_NOW[i] * mask_B[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL));
 		}
 		LED_DMASend();
 	}
@@ -171,7 +171,7 @@ void LED_allOff(void)
 {
 	for (u32 i = 0U; i < ALL_LED+1U; i++)
 	{
-		LED_setColor(i, 0, 0, 0);
+		LED_setColor((u8)i, (u8)0U, (u8)0, (u8)0);
 	}
     LED_DMASend();
 	HAL_Delay(1);
