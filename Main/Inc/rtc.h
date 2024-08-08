@@ -5,31 +5,8 @@
 extern "C" {
 #endif
 
-
-typedef enum {
-    JAN = 1U,
-    FEB,
-    MAR,
-    APR,
-    MAY,
-    JUN,
-    JUL,
-    AUG,
-    SEP,
-    OCT,
-    NOV,
-    DEC,
-} MONTH_LIST;
-
-typedef enum {
-    MON = 0U,
-    TUE,
-    WED,
-    THU,
-    FRI,
-    SAT,
-    SUN,
-} DAY_LIST;
+void dateSet(u8 year, u8 month, u8 date, u8 day);
+void timeSet(u8 hour, u8 min, u8 sec);
 
 #ifdef __cplusplus
 }

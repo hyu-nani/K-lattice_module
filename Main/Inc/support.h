@@ -22,6 +22,8 @@ typedef enum {
     OK,
     BUSY,
     ERR,
+    SET,
+    RESET,
 } CSTATUS;
 
 typedef enum {

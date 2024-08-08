@@ -18,15 +18,17 @@ USRM_HANDLE_Typedef Uhandle;
 void user_init() {
     Uhandle.mode = (Check_ExternPin() == OK ) ? MASTER : SLAVE; 
     Uhandle.tick_main = HAL_GetTick();
-    LED_Init();
+    UART_INIT();
+    LED_INIT();
+
 }
 
 void user_main() {
     /* per main time */
-    
+    LED_PROC();
     /* end */
     while((HAL_GetTick() - Uhandle.tick_main) < MAINLOOP_TIME) {
-        Q_Check();
+        UART_PROC();
     }
     Uhandle.tick_main = HAL_GetTick();
 }

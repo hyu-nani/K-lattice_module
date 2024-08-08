@@ -6,19 +6,21 @@ RTC_HandleTypeDef hrtc;
 RTC_TimeTypeDef sTime = {0};
 RTC_DateTypeDef sDate = {0};
 
-void timeSet() {
-    sTime.Hours = 0x12;     // 12시
-    sTime.Minutes = 0x34;   // 34분
-    sTime.Seconds = 0x56;   // 56초
-    if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK) {
-        Error_Handler();
-    }
-
-    sDate.WeekDay = RTC_WEEKDAY_FRIDAY; // 금요일
-    sDate.Month = RTC_MONTH_AUGUST;     // 8월
-    sDate.Date = 0x07;                  // 7일
-    sDate.Year = 0x24;                  // 2024년
+void dateSet(u8 year, u8 month, u8 date, u8 day) {
+    sDate.WeekDay   = day;      /* 요일 */
+    sDate.Month     = month;    /* 월 */
+    sDate.Date      = date;     /* 일 */
+    sDate.Year      = year;     /* 년 */
     if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK) {
         Error_Handler();
     }
+}
+
+void timeSet(u8 hour, u8 min, u8 sec) {
+    sTime.Hours     = hour;   // 12시
+    sTime.Minutes   = min;   // 34분
+    sTime.Seconds   = sec;   // 56초
+    if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK) {
+        Error_Handler();
+    }   
 }

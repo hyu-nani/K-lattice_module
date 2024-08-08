@@ -42,7 +42,8 @@ typedef struct uart
     u8  cnt;
 } UART_HANDLE_Typedef;
 
-void UART_Init(void);
+void UART_INIT(void);
+void UART_PROC(void);
 void Q_Check(void);
 void UART1_RxCpltCallback(void);
 void UART2_RxCpltCallback(void);

@@ -159,10 +159,18 @@ void resetLedSendFlag() {
     hled.sendFlag = OK;
 }
 
-void LED_Init() {
+void LED_INIT() {
     hled.DX = 15U;
+	hled.updateFlag = OK;
 }
 
 void LED_SetDX(u8 dx) {
     hled.DX = dx;
+}
+
+void LED_PROC() {
+	if (hled.updateFlag != OK) {
+
+		hled.updateFlag = OK;
+	}
 }

@@ -48,6 +48,7 @@ typedef struct
     CBOOL   compare;           
     u8      DX;
     u8      sendFlag;
+    u8      updateFlag;
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
 typedef struct 
@@ -82,7 +83,8 @@ static float    led_segment_mask_g[NUM_PIXELS_PER_UNIT];
 static float    led_segment_mask_b[NUM_PIXELS_PER_UNIT];
 
 void resetLedSendFlag(void);
-void LED_Init(void);
+void LED_INIT(void);
+void LED_PROC(void);
 
 #ifdef __cplusplus
 }

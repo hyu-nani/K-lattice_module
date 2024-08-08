@@ -160,12 +160,12 @@ static void UART2_Send_Q_Check(u32 time) {
     }
 }
 
-void UART_Init() {
+void UART_INIT() {
     huart.delayTx1 = 0U;
     huart.delayTx2 = 0U;
 }
 
-void Q_Check() {
+void UART_PROC() {
     UART1_Recv_Q_Check();
     UART1_Send_Q_Check(HAL_GetTick());
     UART2_Recv_Q_Check();
