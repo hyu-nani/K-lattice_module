@@ -10,6 +10,7 @@
  * protocol is [ STX/CNT/CMD/DAT0/DAT1/DAT2/DAT3/DAT4/ETX ]
  * when the CNT is 0x00, then active device (cascade)
  */
+
 #include <main.h>
 #include <string.h>
 #include "../Inc/uart.h"

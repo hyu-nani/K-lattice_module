@@ -31,43 +31,22 @@ static void DMA_Start() {
 static void LED_DMASend(void)
 {
 	DMA_Start();
-	for (u32 pixelNum = 0U ; pixelNum < (ALL_LED * 3U); pixelNum += 3)
+	for (u32 pixelNum = 0U ; pixelNum < ALL_LED; pixelNum++)
 	{
 		hled.idx = 0U;
 		u8 i = (u8)0U;
 		//GRB
 		for (i = 8U; i > 0U; i--)
 		{
-			if ((hled.buf[pixelNum + 1U] >> i) & 0x01U)
-			{
-				hled.dma_buf[hled.idx++] = NEOPIXEL_ONE;
-			}
-			else
-			{
-				hled.dma_buf[hled.idx++] = NEOPIXEL_ZERO;
-			}
+			hled.dma_buf[hled.idx++] = ((hled.buf[(pixelNum*3U) + 1U] >> i) & 0x01U) ? NEOPIXEL_ONE : NEOPIXEL_ZERO;
 		}
 		for (i = 8U; i > 0U; i--)
 		{
-			if ((hled.buf[pixelNum + 0U] >> i) & 0x01U)
-			{
-				hled.dma_buf[hled.idx++] = NEOPIXEL_ONE;
-			}
-			else
-			{
-				hled.dma_buf[hled.idx++] = NEOPIXEL_ZERO;
-			}
+			hled.dma_buf[hled.idx++] = ((hled.buf[(pixelNum*3U) + 0U] >> i) & 0x01U) ? NEOPIXEL_ONE : NEOPIXEL_ZERO; 
 		}
 		for (i = 8U; i > 0U; i--)
 		{
-			if ((hled.buf[pixelNum + 2U] >> i ) & 0x01U)
-			{
-				hled.dma_buf[hled.idx++] = NEOPIXEL_ONE;
-			}
-			else
-			{
-				hled.dma_buf[hled.idx++] = NEOPIXEL_ZERO;
-			}
+			hled.dma_buf[hled.idx++] = ((hled.buf[(pixelNum*3U) + 2U] >> i ) & 0x01U) ? NEOPIXEL_ONE : NEOPIXEL_ZERO;
 		}
 		hled.dma_buf[hled.idx] = 0U;
 		DMA_Start();
@@ -84,9 +63,9 @@ static void LED_DMASend(void)
  */
 void LED_setColor(u8 pixelNum, u8 led_R, u8 led_G, u8 led_B)
 {
-	hled.buf[pixelNum * 3 + 0] = (u16)((float)led_R * MAX_BRIGHT / 255.0f);
-	hled.buf[pixelNum * 3 + 1] = (u16)((float)led_G * MAX_BRIGHT / 255.0f);
-	hled.buf[pixelNum * 3 + 2] = (u16)((float)led_B * MAX_BRIGHT / 255.0f);
+	hled.buf[pixelNum * 3 + 0] = (u8)((float)led_R * MAX_BRIGHT / 255.0f);
+	hled.buf[pixelNum * 3 + 1] = (u8)((float)led_G * MAX_BRIGHT / 255.0f);
+	hled.buf[pixelNum * 3 + 2] = (u8)((float)led_B * MAX_BRIGHT / 255.0f);
 }
 
 /** @brief led show segment
@@ -165,11 +144,10 @@ void LED_showSegment(u8* str, COLOR_TYPEDEF_STRUCT* color, CBOOL invert)
 
 /**
  * @brief led All off
- * 
  */
 void LED_allOff(void)
 {
-	for (u32 i = 0U; i < ALL_LED+1U; i++)
+	for (u32 i = 0U; i < ALL_LED + 1U; i++)
 	{
 		LED_setColor((u8)i, (u8)0U, (u8)0, (u8)0);
 	}

@@ -9,7 +9,7 @@ extern "C" {
 
 #include "../Inc/led.h"
 #include "../Inc/uart.h"
-
+#include "../Inc/rtc.h"
 
 enum {
     MASTER = 0,

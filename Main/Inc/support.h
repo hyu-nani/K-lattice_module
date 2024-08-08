@@ -26,10 +26,10 @@ typedef enum {
 
 typedef enum {
     NONE = 0x00U,
-    SW1 = 0x01U,
-    SW2 = 0x02U,
-    SW3 = 0x04U,
-    SW4 = 0x08U,
+    SW1ON = 0x01U,
+    SW2ON = 0x02U,
+    SW3ON = 0x04U,
+    SW4ON = 0x08U,
 } SWITCH;
 /*
  * support

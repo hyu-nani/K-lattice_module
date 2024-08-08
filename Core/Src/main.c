@@ -37,7 +37,19 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+#if 1
+extern ADC_HandleTypeDef hadc1;
 
+extern I2C_HandleTypeDef hi2c2;
+
+extern RTC_HandleTypeDef hrtc;
+
+extern TIM_HandleTypeDef htim3;
+extern DMA_HandleTypeDef hdma_tim3_ch1;
+
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
+#else
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -54,7 +66,7 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+#endif
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
