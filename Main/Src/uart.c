@@ -106,7 +106,7 @@ void Clear_Q(UART_DIR Q) {
 }
 
 
-static void UART1_Recv_Q_Check() {
+static void UART1_Recv_Q_Check(void) {
     CSTATUS status = OK;
     u32 dat;
     if (UART1Recv.HEAD != UART1Recv.TAIL) {
@@ -145,7 +145,7 @@ static void UART1_Send_Q_Check(u32 time) {
     }
 }
 
-static void UART2_Recv_Q_Check() {
+static void UART2_Recv_Q_Check(void) {
     if (UART2Recv.HEAD != UART2Recv.TAIL) {
         
         Clear_Q(UART2_RECV);
@@ -160,19 +160,19 @@ static void UART2_Send_Q_Check(u32 time) {
     }
 }
 
-void UART_INIT() {
+void UART_INIT(void) {
     huart.delayTx1 = 0U;
     huart.delayTx2 = 0U;
 }
 
-void UART_PROC() {
+void UART_PROC(void) {
     UART1_Recv_Q_Check();
     UART1_Send_Q_Check(HAL_GetTick());
     UART2_Recv_Q_Check();
     UART2_Send_Q_Check(HAL_GetTick());
 }
 
-void UART1_RxCpltCallback() {
+void UART1_RxCpltCallback(void) {
     huart.len = UART1_RX_LEN - UART1_RX_CNT;
     if ((huart.len > 0U) && (UART1Recv.CNT < MAXQ)) {
         memcpy(&UART1Recv.BUF[UART1Recv.HEAD][UART1Recv.IDX], huart.rxd, huart.len);
@@ -190,7 +190,7 @@ void UART1_RxCpltCallback() {
     HAL_UART_Receive_IT(UART1_HANDLE, huart.rxd, UART1_RX_LEN);
 }
 
-void UART2_RxCpltCallback() {
+void UART2_RxCpltCallback(void) {
     huart.len = UART2_RX_LEN - UART2_RX_CNT;
     if ((huart.len > 0U) && (UART2Recv.CNT < MAXQ)) {
         memcpy(&UART1Recv.BUF[UART1Recv.HEAD][UART1Recv.IDX], huart.rxd, huart.len);

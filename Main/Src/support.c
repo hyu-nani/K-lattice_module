@@ -1,7 +1,7 @@
 #include <main.h>
 #include "../Inc/support.h"
 
-CSTATUS Check_ExternPin() {
+CSTATUS Check_ExternPin(void) {
     CSTATUS ret;
     if (HAL_GPIO_ReadPin(EXTEND_GPIO_Port, EXTEND_Pin) == GPIO_PIN_SET) {
         ret = OK;
@@ -50,4 +50,8 @@ SWITCH checkSW(void) {
     ret |= (HAL_GPIO_ReadPin(SW3_GPIO_Port, SW3_Pin) == GPIO_PIN_SET) ? SW3ON : NONE;
     ret |= (HAL_GPIO_ReadPin(SW4_GPIO_Port, SW4_Pin) == GPIO_PIN_SET) ? SW4ON : NONE;
     return ret;
+}
+
+void SW_PROC(void) {
+
 }

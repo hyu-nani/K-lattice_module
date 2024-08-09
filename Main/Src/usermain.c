@@ -15,7 +15,7 @@ USRM_HANDLE_Typedef Uhandle;
 
 #define MAINLOOP_TIME  10   /*ms*/
 
-void user_init() {
+void user_init(void) {
     Uhandle.mode = (Check_ExternPin() == OK ) ? MASTER : SLAVE; 
     Uhandle.tick_main = HAL_GetTick();
     UART_INIT();
@@ -23,7 +23,7 @@ void user_init() {
 
 }
 
-void user_main() {
+void user_main(void) {
     /* per main time */
     LED_PROC();
     /* end */

@@ -37,6 +37,11 @@ extern "C" {
 
 #define MUL_VAL                 100.0f
 
+typedef enum {
+    INIT = 0,
+    BUSY,
+    DONE,
+} STATE_SYCN_LIST;
 /* private define ------------------------------------ */
 typedef struct 
 {
@@ -46,9 +51,11 @@ typedef struct
     u8      buf[RING_BUF_SIZE];     //all buf
 
     CBOOL   compare;           
-    u8      DX;
+    u8      dxCnt;
+    u8      dx;
+    u32     syncStatus;
     u8      sendFlag;
-    u8      updateFlag;
+    u8      isUpdateFlag;
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
 typedef struct 

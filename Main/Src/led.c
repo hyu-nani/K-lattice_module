@@ -19,7 +19,7 @@ DATA_HANDLE_TYPEDEF_STRUCT hled;
 
 #define DMA_HANDLE  &htim3
 
-static void DMA_Start() {
+static void DMA_Start()void {
     while(hled.sendFlag != OK);
 	HAL_TIM_PWM_Start_DMA(DMA_HANDLE, TIM_CHANNEL_1, hled.dma_buf, DMA_BUFF_SIZE);
 	hled.sendFlag == BUSY;
@@ -68,6 +68,41 @@ void LED_setColor(u8 pixelNum, u8 led_R, u8 led_G, u8 led_B)
 	hled.buf[pixelNum * 3 + 2] = (u8)((float)led_B * MAX_BRIGHT / 255.0f);
 }
 
+/**
+ * @brief led change sync
+ * 
+ */
+CSTATUS LED_SyncUpdate(void) {
+	s32 i;
+	CSTATUS status = OK;
+	if (hled.syncStatus == INIT) {
+		memcpy(&ledColor.R_ORIG[0], &ledColor.R_NOW[0], ALL_LED);
+		memcpy(&ledColor.G_ORIG[0], &ledColor.G_NOW[0], ALL_LED);
+		memcpy(&ledColor.B_ORIG[0], &ledColor.B_NOW[0], ALL_LED);
+		hled.dxCnt = 0;
+		status = ;
+	}
+	else if (hled.syncStatus == BUSY) {
+		for (i = 0U; i < ALL_LED; i++)
+		{
+			ledColor.R_NOW[i] += (s16)(((float)ledColor.R_DEST[i] - (float)ledColor.R_ORIG[i]) / (float)hled.dx);
+			ledColor.G_NOW[i] += (s16)(((float)ledColor.G_DEST[i] - (float)ledColor.G_ORIG[i]) / (float)hled.dx);
+			ledColor.B_NOW[i] += (s16)(((float)ledColor.B_DEST[i] - (float)ledColor.B_ORIG[i]) / (float)hled.dx);
+			LED_setColor(i, (u8)((float)ledColor.R_NOW[i] * mask_R[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL), 
+							(u8)((float)ledColor.G_NOW[i] * mask_G[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL), 
+							(u8)((float)ledColor.B_NOW[i] * mask_B[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL));
+		}
+		hled.dxCnt++;
+		if (hled.dxCnt == hled.dx) {
+			hled.syncStatus = DONE;
+		}
+	}
+	else if (hled.syncStatus == DONE) {
+		hled.isUpdateFlag = OK;
+	}
+	LED_DMASend();
+}
+
 /** @brief led show segment
  * 
  *  @param ch a ascii textIdx
@@ -77,7 +112,7 @@ void LED_setColor(u8 pixelNum, u8 led_R, u8 led_G, u8 led_B)
  *  @param led_bright 0 - 100 [%]
  *  @param invert true = invert, false = default
  */
-void LED_showSegment(u8* str, COLOR_TYPEDEF_STRUCT* color, CBOOL invert)
+void LED_setSegment(u8* str, COLOR_TYPEDEF_STRUCT* color, CBOOL invert)
 {
 	s32 i, j, k;
     u8 bit8;
@@ -123,23 +158,7 @@ void LED_showSegment(u8* str, COLOR_TYPEDEF_STRUCT* color, CBOOL invert)
 		}
 	}
 
-    memcpy(&ledColor.R_ORIG[0], &ledColor.R_NOW[0], ALL_LED);
-    memcpy(&ledColor.G_ORIG[0], &ledColor.G_NOW[0], ALL_LED);
-    memcpy(&ledColor.B_ORIG[0], &ledColor.B_NOW[0], ALL_LED);
     
-	for (k = 0U; k < hled.DX; k++)
-	{
-		for (i = 0U; i < ALL_LED; i++)
-		{
-			ledColor.R_NOW[i] += (s16)(((float)ledColor.R_DEST[i] - (float)ledColor.R_ORIG[i]) / (float)hled.DX);
-			ledColor.G_NOW[i] += (s16)(((float)ledColor.G_DEST[i] - (float)ledColor.G_ORIG[i]) / (float)hled.DX);
-			ledColor.B_NOW[i] += (s16)(((float)ledColor.B_DEST[i] - (float)ledColor.B_ORIG[i]) / (float)hled.DX);
-			LED_setColor(i, (u8)((float)ledColor.R_NOW[i] * mask_R[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL), 
-							(u8)((float)ledColor.G_NOW[i] * mask_G[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL), 
-							(u8)((float)ledColor.B_NOW[i] * mask_B[mask_size[i % NUM_PIXELS_PER_UNIT]] / MUL_VAL));
-		}
-		LED_DMASend();
-	}
 }
 
 /**
@@ -160,17 +179,16 @@ void resetLedSendFlag() {
 }
 
 void LED_INIT() {
-    hled.DX = 15U;
-	hled.updateFlag = OK;
+    hled.dx = 15U;
+	hled.isUpdateFlag = OK;
 }
 
 void LED_SetDX(u8 dx) {
-    hled.DX = dx;
+    hled.dx = dx;
 }
 
 void LED_PROC() {
-	if (hled.updateFlag != OK) {
-
-		hled.updateFlag = OK;
+	if (hled.isUpdateFlag != OK) {
+		LED_SyncUpdate();
 	}
 }
